@@ -72,9 +72,9 @@ def fmt_time(dtime):
     if dtime <= 0:
         return '0:00.000'
     elif dtime < 60:
-        return '0:%02d.%03d' % (int(dtime), int(dtime * 1000) % 1000)
+        return f'0:{int(int(dtime)):02}.{int(int(dtime * 1000) % 1000):03}'
     elif dtime < 3600:
-        return '%d:%02d.%03d' % (int(dtime / 60), int(dtime) % 60, int(dtime * 1000) % 1000)
+        return f'{int(int(dtime / 60))}:{int(int(dtime) % 60):02}.{int(int(dtime * 1000) % 1000):03}'
     else:
         return '%d:%02d:%02d.%03d' % (int(dtime / 3600), int((dtime % 3600) / 60), int(dtime) % 60,
                                       int(dtime * 1000) % 1000)
@@ -135,7 +135,7 @@ def main():
     for idx, file in enumerate(files):
         elapsed = time.time() - time_start
         eta = (file_len - idx) * elapsed / idx if idx > 0 else 0
-        print('[%d/%d] Elapsed: %s, ETA: %s >> %s' % (idx+1, file_len, fmt_time(elapsed), fmt_time(eta), file))
+        print(f'[{int(idx + 1)}/{int(file_len)}] Elapsed: {fmt_time(elapsed)}, ETA: {fmt_time(eta)} >> {file}')
         img = cv2.imread(file)
         scores, boxes = detect(sess, net, img)
         boxes = boxes[:, 4:8]
