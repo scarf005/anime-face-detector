@@ -54,5 +54,5 @@ def load_op_library(path):
       return None
   path = resource_loader.get_path_to_datafile(path)
   ret = load_library.load_op_library(path)
-  assert ret, 'Could not load %s' % path
+  assert ret, f'Could not load {path}'
   return ret

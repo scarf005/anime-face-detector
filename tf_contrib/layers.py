@@ -268,7 +268,7 @@ def _fused_batch_norm(inputs,
     original_inputs = inputs
     original_rank = original_shape.ndims
     if original_rank is None:
-      raise ValueError('Inputs %s has undefined rank' % inputs.name)
+      raise ValueError(f'Inputs {inputs.name} has undefined rank')
     elif original_rank not in [2, 4]:
       raise ValueError('Inputs %s has unsupported rank.'
                        ' Expected 2 or 4 but got %d' %
@@ -676,7 +676,7 @@ def batch_norm(inputs,
     inputs_shape = inputs.get_shape()
     inputs_rank = inputs_shape.ndims
     if inputs_rank is None:
-      raise ValueError('Inputs %s has undefined rank.' % inputs.name)
+      raise ValueError(f'Inputs {inputs.name} has undefined rank.')
     dtype = inputs.dtype.base_dtype
     if batch_weights is not None:
       batch_weights = ops.convert_to_tensor(batch_weights)
@@ -1007,7 +1007,7 @@ def convolution(inputs,
     ValueError: Both 'rate' and `stride` are not uniformly 1.
   """
   if data_format not in [None, 'NWC', 'NCW', 'NHWC', 'NCHW', 'NDHWC', 'NCDHW']:
-    raise ValueError('Invalid data_format: %r' % (data_format,))
+    raise ValueError(f'Invalid data_format: {data_format!r}')
 
   layer_variable_getter = _build_variable_getter({
       'bias': 'biases',
@@ -2278,7 +2278,7 @@ def layer_norm(inputs,
     inputs_shape = inputs.shape
     inputs_rank = inputs_shape.ndims
     if inputs_rank is None:
-      raise ValueError('Inputs %s has undefined rank.' % inputs.name)
+      raise ValueError(f'Inputs {inputs.name} has undefined rank.')
     dtype = inputs.dtype.base_dtype
     if begin_norm_axis < 0:
       begin_norm_axis = inputs_rank + begin_norm_axis
@@ -2515,7 +2515,7 @@ def pool(inputs,
 
   """
   # pylint: enable=line-too-long
-  with ops.name_scope(scope, '%s_pool' % (pooling_type.lower()),
+  with ops.name_scope(scope, f'{pooling_type.lower()}_pool',
                       [inputs]) as sc:
     inputs = ops.convert_to_tensor(inputs)
     input_rank = inputs.get_shape().ndims
@@ -3270,7 +3270,7 @@ def legacy_fully_connected(x,
     if dims is None:
       raise ValueError('dims of x must be known but is None')
     if len(dims) < 2:
-      raise ValueError('rank of x must be at least 2 not: %d' % len(dims))
+      raise ValueError(f'rank of x must be at least 2 not: {len(dims)}')
     num_input_units = dims[-1].value
     if num_input_units is None:
       raise ValueError('last dimension of x must be known but is None')

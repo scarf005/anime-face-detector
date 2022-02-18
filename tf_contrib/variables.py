@@ -503,13 +503,12 @@ def get_unique_variable(var_op_name):
   """
   candidates = get_variables(scope=var_op_name)
   if not candidates:
-    raise ValueError('Couldn\'t find variable %s' % var_op_name)
+    raise ValueError(f'Couldn\'t find variable {var_op_name}')
 
   for candidate in candidates:
     if candidate.op.name == var_op_name:
       return candidate
-  raise ValueError('Variable %s does not uniquely identify a variable' %
-                   var_op_name)
+  raise ValueError(f'Variable {var_op_name} does not uniquely identify a variable')
 
 
 def assign_from_values(var_names_to_values):
@@ -536,7 +535,7 @@ def assign_from_values(var_names_to_values):
     var_value = var_names_to_values[var_name]
     var = ops.get_collection(ops.GraphKeys.GLOBAL_VARIABLES, var_name)
     if not var:
-      raise ValueError('Variable %s wasn\'t found' % var_name)
+      raise ValueError(f'Variable {var_name} wasn\'t found')
     elif len(var) > 1:
       # tf.compat.v1.get_collection is just a filter on the prefix: find the exact match:
       found = False
@@ -547,8 +546,7 @@ def assign_from_values(var_names_to_values):
           break
 
       if not found:
-        raise ValueError('Variable %s doesn\'t uniquely identify a variable' %
-                         var_name)
+        raise ValueError(f'Variable {var_name} doesn\'t uniquely identify a variable')
     else:
       var = var[0]
 
@@ -668,7 +666,7 @@ def assign_from_checkpoint(model_path, var_list, ignore_missing_vars=False):
   assign_ops = []
   for ckpt_name in grouped_vars:
     if not reader.has_tensor(ckpt_name):
-      log_str = 'Checkpoint is missing variable [%s]' % ckpt_name
+      log_str = f'Checkpoint is missing variable [{ckpt_name}]'
       if ignore_missing_vars:
         logging.warning(log_str)
         continue

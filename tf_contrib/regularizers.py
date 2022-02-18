@@ -50,11 +50,10 @@ def l1_regularizer(scale, scope=None):
     ValueError: If scale is negative or if scale is not a float.
   """
   if isinstance(scale, numbers.Integral):
-    raise ValueError('scale cannot be an integer: %s' % scale)
+    raise ValueError(f'scale cannot be an integer: {scale}')
   if isinstance(scale, numbers.Real):
     if scale < 0.:
-      raise ValueError('Setting a scale less than 0 on a regularizer: %g' %
-                       scale)
+      raise ValueError(f'Setting a scale less than 0 on a regularizer: {scale:g}')
     if scale == 0.:
       logging.info('Scale of 0 disables regularizer.')
       return lambda _: None
@@ -89,11 +88,10 @@ def l2_regularizer(scale, scope=None):
     ValueError: If scale is negative or if scale is not a float.
   """
   if isinstance(scale, numbers.Integral):
-    raise ValueError('scale cannot be an integer: %s' % (scale,))
+    raise ValueError(f'scale cannot be an integer: {scale}')
   if isinstance(scale, numbers.Real):
     if scale < 0.:
-      raise ValueError('Setting a scale less than 0 on a regularizer: %g.' %
-                       scale)
+      raise ValueError(f'Setting a scale less than 0 on a regularizer: {scale:g}.')
     if scale == 0.:
       logging.info('Scale of 0 disables regularizer.')
       return lambda _: None
@@ -125,9 +123,9 @@ def l1_l2_regularizer(scale_l1=1.0, scale_l2=1.0, scope=None):
     ValueError: If scale is negative or if scale is not a float.
   """
   if isinstance(scale_l1, numbers.Integral):
-    raise ValueError('scale_l1 cannot be an integer: %s' % (scale_l1,))
+    raise ValueError(f'scale_l1 cannot be an integer: {scale_l1}')
   if isinstance(scale_l2, numbers.Integral):
-    raise ValueError('scale_l2 cannot be an integer: %s' % (scale_l2,))
+    raise ValueError(f'scale_l2 cannot be an integer: {scale_l2}')
   scope = scope or 'l1_l2_regularizer'
   if scale_l1 == 0.:
     return l2_regularizer(scale_l2, scope)
